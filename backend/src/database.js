@@ -1,6 +1,6 @@
 const sequelize = require('./models/sequelize');
 
-exports.Chat = require('./models/chat');
+exports.SensorData = require('./models/sensors');
 
 exports.sync = (options) => {
   return sequelize.sync(options);

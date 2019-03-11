@@ -1,8 +1,9 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./sequelize');
 
-var ChatMessage = sequelize.define('chats', {
-  message: Sequelize.TEXT,
+var SensorEntry = sequelize.define('sensors', {
+  temperature: Sequelize.FLOAT,
+  humidity: Sequelize.FLOAT,
 }, {
   timestamps: true,
   instanceMethods: {
@@ -11,11 +12,12 @@ var ChatMessage = sequelize.define('chats', {
         // This is a unique id that is generated automatically
         id: this.id,
         // This also comes for free
-        createdAt: this.createdAt,
-        message: this.message,
+        timestamp: this.createdAt,
+        temperature: this.temperature,
+        humidity: this.humidity,
       };
     },
   },
 });
 
-module.exports = ChatMessage;
+module.exports = SensorEntry;
