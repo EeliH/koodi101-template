@@ -16,8 +16,8 @@ app.use(bodyParser());
 
 const publicRouter = new Router({ prefix: '/api' });
 
-publicRouter.post('/sensors', entries.create);
-publicRouter.get('/sensors', entries.list);
+publicRouter.post('/temperature', entries.create);
+publicRouter.get('/temperature', entries.list);
 
 publicRouter.get('/greeting', greeting.greet);
 
