@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import './assets/stylesheets/style.css'
+import './assets/stylesheets/style.css';
 
 const baseURL = process.env.ENDPOINT;
 
@@ -11,10 +11,10 @@ const baseURL = process.env.ENDPOINT;
 
 const getGreetingFromBackend = async () => {
   try {
-    const url = `${baseURL}/api/greeting`
-    console.log("Getting greeting from "+url)
+    const url = `${baseURL}/api/temperature`;
+    console.log("Getting greeting from "+url);
     const response = await fetch(url);
-    return response.json()
+    return response.json();
   } catch (error) {
     console.error(error);
   }
@@ -22,8 +22,11 @@ const getGreetingFromBackend = async () => {
 };
 
 
-const BackendGreeting = (props) => (
-  <div><p>Backend says: {props.greeting}</p></div>
+const InfoBox = (props) => (
+  <div>
+    <p>{props.temp}°C</p>
+    <p>{props.hum}%</p>
+  </div>
 );
 
 
@@ -32,19 +35,27 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      greeting: "",
+      temp: null,
+      hum: null,
     };
   }
 
   async componentWillMount() {
     const response = await getGreetingFromBackend();
-    this.setState({greeting: response.greeting});
+    console.log(response);
+    const latestEntry = response["results"].slice(-1)[0];
+    this.setState(
+      {
+        temp: latestEntry["temperature"], 
+        hum: latestEntry["humidity"]
+      }
+    );
   }
 
   render() {
 
     return (
-      <BackendGreeting greeting={this.state.greeting} />
+      <InfoBox temp={this.state.temp} hum={this.state.hum} />
     );
   }
 }
