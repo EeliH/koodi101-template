@@ -24,23 +24,29 @@ const getGreetingFromBackend = async () => {
 };
 
 const InfoBox = (props) => (
-  <table>
-    <tbody>
+  <table class="table">
+    <thead>
       <tr>
-        <td>Timestamp</td>
-        <td>Temperature</td>
-        <td>Humidity</td>
+        <td scope="col">ID</td>
+        <td scope="col">Time</td>
+        <td scope="col">Temperature</td>
+        <td scope="col">Humidity</td>
       </tr>
+    </thead>
+    <tbody>
       {props.data.map(entry => 
       <tr key={entry.id}>
+        <th scope="row">
+          {entry.id}
+        </th>
         <td>
           {moment(entry.timestamp).fromNow()}
         </td>
         <td>
-          {entry.temperature}
+          {entry.temperature}°C
         </td>
         <td>
-          {entry.humidity}
+          {entry.humidity}%
         </td>
       </tr>
       )}
