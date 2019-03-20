@@ -3,6 +3,19 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  VerticalGridLines,
+  HorizontalGridLines,
+  VerticalRectSeries,
+  VerticalRectSeriesCanvas,
+  ChartLabel,
+  LineSeries,
+  LineSeriesCanvas
+} from 'react-vis';
+
 var moment = require('moment');
 
 import './assets/stylesheets/style.css';
@@ -23,8 +36,9 @@ const getGreetingFromBackend = async () => {
   return {greetings: "Greetings, traveller!"};
 };
 
-const InfoBox = (props) => (
-  <table class="table">
+const InfoBox = (props) => {
+  return (
+  <table className="table">
     <thead>
       <tr>
         <td scope="col">ID</td>
@@ -52,7 +66,10 @@ const InfoBox = (props) => (
       )}
     </tbody>
   </table>
+
 );
+
+}
 
 class App extends Component {
 
@@ -73,8 +90,28 @@ class App extends Component {
   }
 
   render() {
+    const {useCanvas} = this.state;
+    const RectSeries = useCanvas
+      ? VerticalRectSeriesCanvas
+      : VerticalRectSeries;
+
     return (
-      <InfoBox data={this.state.data} />
+      <div className="content">
+        <XYPlot xDomain={[0, 7]} width={300} height={350} stackBy="y">
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis />
+          <YAxis />
+          <RectSeries
+            data={
+              this.state.data.slice(-7).map(entry => {
+                return {x0: entry.id-1, x: entry.id, y: entry.humidity};
+              }) 
+            }
+          />
+        </XYPlot>
+        <InfoBox data={this.state.data} />
+      </div>
     );
   }
 }
