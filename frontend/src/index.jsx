@@ -105,6 +105,7 @@ class App extends Component {
           <RectSeries
             data={
               this.state.data.slice(-7).map(entry => {
+                // TODO: get this id thing to work my man
                 return {x0: entry.id-1, x: entry.id, y: entry.humidity};
               }) 
             }
